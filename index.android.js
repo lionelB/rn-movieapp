@@ -4,9 +4,7 @@
  * @flow
  */
 
-import {
-  AppRegistry,
-} from 'react-native'
-import { App } from './app/index'
+import { AppRegistry } from "react-native"
+import { MovieApp } from "./app/index"
 
-AppRegistry.registerComponent('FilmApp', () => App)
+AppRegistry.registerComponent("movieApp", () => MovieApp)
