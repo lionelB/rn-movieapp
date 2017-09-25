@@ -1,48 +1,52 @@
 // @flow
-import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import React from "react"
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native"
 
 export class FilmItem extends React.Component {
+  props: {
+    title: string,
+    image: string,
+    clickHandler: () => void,
+  }
   static defaultProps = {
-    name: "best movie film",
-    image: { uri: "https://placeimg.com/640/480/any" }
-  };
-  constructor(props) {
-    super(props)
+    title: "best movie film",
+    image: "https://placeimg.com/640/480/any",
+    clickHandler: () => {},
   }
 
-  render() { 
+  render() {
     return (
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={this.props.image} />
-        <Text style={styles.title}> {this.props.name}</Text>
-      </View>
-    );
+      <TouchableOpacity onPress={this.props.clickHandler} style={this.props.style}>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} resizeMode="cover" source={{ uri: this.props.image }} />
+          <Text style={styles.title}> {this.props.title}</Text>
+        </View>
+      </TouchableOpacity>
+    )
   }
 }
 
 const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
-    paddingBottom: 5,
-    flexDirection: "row",
-    alignItems: "stretch"
+    padding: 10,
   },
   title: {
     color: "#232323",
     fontWeight: "bold",
     fontSize: 16,
-    flex: 1
+    fontFamily: "MontSerrat",
+    fontWeight: "300",
+    textAlign: "center",
   },
   image: {
-    width: 64,
-    height: 48,
+    height: 250,
     shadowColor: "#000000",
     shadowOffset: {
-      width: 1,
-      height: 3
+      width: 3,
+      height: 3,
     },
-    shadowRadius: 5,
-    shadowOpacity: 0.5
-  }
-});
+    shadowRadius: 10,
+    shadowOpacity: 0.5,
+  },
+})

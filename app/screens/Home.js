@@ -1,21 +1,18 @@
 // @flow
 
-import React, {Component} from 'react'
-import {
-  StyleSheet,
-  View,
-} from 'react-native'
-import { FilmList } from '../components/films/film-list'
+import React from "react"
+import { StyleSheet, View } from "react-native"
+import { FilmList } from "../components/films/film-list"
+import { AppHeader } from "../components/ui/header"
 
-export class HomeScreen extends Component {
+export class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Welcome Screen',
+    title: "Popular movies",
   }
-
   render() {
     return (
       <View style={styles.main}>
-        <FilmList style={styles.films} />
+        <FilmList navigation={this.props.navigation} />
       </View>
     )
   }
@@ -24,8 +21,7 @@ export class HomeScreen extends Component {
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    padding: 15,
-    justifyContent: 'center',
-    flexDirection: 'column'
+    justifyContent: "center",
+    flexDirection: "column",
   },
 })
