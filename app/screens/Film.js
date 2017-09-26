@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from "react"
-import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native"
+import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity } from "react-native"
 import { AppHeader } from "../components/ui/header"
 import type { Film } from "../types"
 
@@ -25,15 +25,22 @@ export class FilmScreen extends Component {
   render() {
     const { state, navigate } = this.props.navigation
     const { film } = state.params
+    console.log(this.props.navigation)
     return (
-      <View style={styles.main}>
-        <Text>{film.name}</Text>
-        <Image resizeMode="stretch" style={styles.image} source={{ uri: film.poster_path }} />
-        <Text>{film.overview}</Text>
-        <TouchableOpacity onPress={() => navigate("Home")}>
-          <Text>Back</Text>
-        </TouchableOpacity>
-      </View>
+      <ScrollView style={{ flex: 1, flexDirection: "column" }}>
+        <Image
+          resizeMode="stretch"
+          style={styles.image}
+          source={{ uri: `https://image.tmdb.org/t/p/w500${film.poster_path}` }}
+        />
+        <View style={{ paddingLeft: 20, paddingRight: 20 }}>
+          <Text>{film.title}</Text>
+          <Text>{film.overview}</Text>
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+            <Text>Back</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     )
   }
 }
@@ -41,9 +48,8 @@ export class FilmScreen extends Component {
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    padding: 15,
     justifyContent: "center",
     flexDirection: "column",
   },
-  image: {},
+  image: { flex: 1, height: "100%" },
 })
