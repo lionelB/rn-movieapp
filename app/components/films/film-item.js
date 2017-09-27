@@ -1,17 +1,21 @@
 // @flow
 import React from "react"
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native"
+import type { StyleObj } from "react-native/Libraries/StyleSheet/StyleSheetTypes"
 
 export class FilmItem extends React.Component {
   props: {
     title: string,
     image: string,
     clickHandler: () => void,
+    style: StyleObj,
   }
+
   static defaultProps = {
     title: "best movie film",
     image: "https://placeimg.com/640/480/any",
     clickHandler: () => {},
+    style: {},
   }
 
   render() {

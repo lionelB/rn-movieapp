@@ -5,3 +5,5 @@ export type Film = {
   backdrop_path: string,
   name: string,
 }
+export type Films = Film[]
+export type Dictionary<T> = { [string]: T }

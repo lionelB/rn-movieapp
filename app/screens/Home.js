@@ -5,20 +5,29 @@ import { StyleSheet, View } from "react-native"
 import { FilmList } from "../components/films/film-list"
 import { AppHeader } from "../components/ui/header"
 import { getUpcomingMovies } from "../commons/api"
+import type { Film } from "../types"
 
 export class HomeScreen extends React.Component {
+  props: {
+    navigation: any,
+  }
+
+  state: {
+    movies: Film[],
+  }
+
   static navigationOptions = {
     title: "Popular movies",
   }
-  constructor(props) {
-    super(props)
+
+  constructor() {
+    super()
     this.state = {
       movies: [],
     }
   }
   componentDidMount() {
     getUpcomingMovies().then(movies => {
-      console.log({ movies })
       this.setState({ movies })
     })
   }

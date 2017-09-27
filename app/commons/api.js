@@ -8,17 +8,15 @@ const BASE_URL = "https://api.themoviedb.org/3"
 
 export const POSTER = "https://image.tmdb.org/t/p/w500"
 
-async function apiFetch(base, params) {
-  const queryString = toQueryString({
-    ...params,
-    api_key: API_KEY,
-    language: "en-US",
-  })
+import { Dictionary, Films } from "../types"
+
+async function apiFetch(base: string, params: Map<string, string>): Promise<Films> {
+  const queryString = toQueryString(
+    new Map([...params, ["api_key", API_KEY], ["language", "en-US"]]),
+  )
 
   try {
-    console.log(`fetch:  ${BASE_URL}${base}${queryString}`)
     const response = await fetch(`${BASE_URL}${base}${queryString}`)
-    console.log({ response })
     const data = await response.json()
     if (response.status !== 200) {
       throw {
@@ -29,27 +27,28 @@ async function apiFetch(base, params) {
     }
     return data.results
   } catch (error) {
-    console.log(error)
     console.warn("[apiFetch]", error)
   }
 }
 
-export async function getUpcomingMovies() {
+export async function getUpcomingMovies(): Promise<Films> {
   try {
-    const result = await apiFetch("/discover/movie", {
-      "primary_release_date.gte": format(Date.now(), "YYYY-MM-DD"),
-      sort_by: "popularity.desc",
-    })
+    const result = await apiFetch(
+      "/discover/movie",
+      new Map([
+        ["primary_release_date.gte", format(Date.now(), "YYYY-MM-DD")],
+        ["sort_by", "popularity.desc"],
+      ]),
+    )
     return result
   } catch (error) {
-    console.log("[getUpcomingMovies]", error)
+    console.warn("[getUpcomingMovies]", error)
   }
 }
 
-function toQueryString(data) {
-  const qs = Object.entries(data).reduce(
+function toQueryString(data: Map<string, string>) {
+  return [...data].reduce(
     (acc, [key, value]) => `${acc}&${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
     "?",
   )
-  return qs
 }

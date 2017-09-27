@@ -7,8 +7,8 @@ import type { Film } from "../../types"
 
 export class FilmList extends React.Component {
   props: {
-    navigation: { navigate: () => void },
-    films: Array<Film>,
+    navigation: { navigate: (screen: string, props?: {}) => void },
+    films: Film[],
   }
 
   static defaultProps = {
@@ -30,28 +30,11 @@ export class FilmList extends React.Component {
           "The true story of the 1973 tennis match between World number one Billie Jean King and ex-champ and serial hustler Bobby Riggs.",
         release_date: "2017-09-22",
       },
-      {
-        vote_count: 0,
-        id: 395993,
-        video: false,
-        vote_average: 0,
-        title: "Stronger",
-        popularity: 44.92432,
-        poster_path: "/nnkxdFeY7YAgnicxkvwuxY7gVaT.jpg",
-        original_language: "en",
-        original_title: "Stronger",
-        genre_ids: [18],
-        backdrop_path: "/2T5tLmck0Kw7GTRvC1flgpH8fUK.jpg",
-        adult: false,
-        overview:
-          "A victim of the Boston Marathon bombing in 2013 helps the police track down the killers while struggling to recover from devastating trauma.",
-        release_date: "2017-09-22",
-      },
     ],
   }
 
   render() {
-    const tupleList = this.props.films.reduce((films, film, index) => {
+    const tupleList = this.props.films.reduce((films: Film[], film: Film, index) => {
       switch (index % 2) {
         case 0:
           return [...films, [film]]
@@ -59,14 +42,14 @@ export class FilmList extends React.Component {
           const [tail, ...head] = films.slice().reverse()
           return [...films.slice(0, -1), [...tail, film]]
       }
+      return films
     }, [])
-    console.log(tupleList)
     const { navigate } = this.props.navigation
 
     return (
       <FlatList
         data={tupleList}
-        keyExtractor={(item, index) => index}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }, index) => {
           const [itemLeft, itemRight] = item
           return (
