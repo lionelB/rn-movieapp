@@ -35,7 +35,8 @@ export function getUpcomingMovies() {
 }
 
 const INITIAL_STATE = {
-  pending: false,
+  isPending: false,
+  isFetched: false,
   movies: [],
   error: null,
 }
@@ -51,11 +52,13 @@ export function homeReducer(state: HomeState = INITIAL_STATE, action: HomeAction
       return {
         ...state,
         isPending: false,
+        isFetched: true,
         movies: [...action.payload],
       }
     case "GET_UPCOMING_MOVIES_REJECTED":
       return {
         ...state,
+        isFetched: true,
         isPending: false,
         error: action.payload,
       }

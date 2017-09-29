@@ -14,7 +14,7 @@ class HomeScreen extends React.Component {
   props: {
     navigation: NavigationScreenProp,
     movies: Film[],
-    isPending: boolean,
+    isFetched: boolean,
     getUpcomingMovies: () => void,
   }
 
@@ -23,7 +23,9 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUpcomingMovies()
+    if (!this.props.isFetched) {
+      this.props.getUpcomingMovies()
+    }
   }
 
   render() {
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
 const HomeScreenConnected = connect(
   (state: AppState) => ({
     movies: state.home.movies,
-    isPending: state.home.isPending,
+    isFetched: state.home.isFetched,
   }),
   dispatch => ({
     getUpcomingMovies: () => dispatch(getUpcomingMovies()),
