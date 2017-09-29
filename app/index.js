@@ -1,16 +1,17 @@
-import React, { Component } from "react"
-import { AppRegistry, StyleSheet } from "react-native"
-import { StackNavigator } from "react-navigation"
+// @flow
 
-import { HomeScreen } from "./screens/Home"
-import { FilmScreen } from "./screens/Film"
+import React from "react"
+import { Provider } from "react-redux"
+import App from "./commons/AppNavigator"
+import { configureStore } from "./configureStore"
 
-export const MovieApp = StackNavigator(
-  {
-    Home: { screen: HomeScreen },
-    Film: { screen: FilmScreen },
-  },
-  {
-    headerMode: "none",
-  },
-)
+export class MovieApp extends React.Component {
+  store = configureStore()
+  render() {
+    return (
+      <Provider store={this.store}>
+        <App />
+      </Provider>
+    )
+  }
+}

@@ -1,14 +1,13 @@
 // @flow
-
 import Config from "react-native-config"
 import { format } from "date-fns"
 
-const API_KEY = Config.API_KEY
+const { API_KEY } = Config
 const BASE_URL = "https://api.themoviedb.org/3"
 
 export const POSTER = "https://image.tmdb.org/t/p/w500"
 
-import { Dictionary, Films } from "../types"
+import { Films } from "../types"
 
 async function apiFetch(base: string, params: Map<string, string>): Promise<Films> {
   const queryString = toQueryString(
@@ -19,19 +18,22 @@ async function apiFetch(base: string, params: Map<string, string>): Promise<Film
     const response = await fetch(`${BASE_URL}${base}${queryString}`)
     const data = await response.json()
     if (response.status !== 200) {
-      throw {
+      throw new Error({
         name: "APIError",
         code: data.status_code,
         message: data.status_message,
-      }
+      })
     }
     return data.results
+    /* eslint-disable-line brace-style */
   } catch (error) {
+    /* eslint-disable-line brace-style */
     console.warn("[apiFetch]", error)
+    return null
   }
 }
 
-export async function getUpcomingMovies(): Promise<Films> {
+export async function fetchUpcomingMovies(): Promise<Films> {
   try {
     const result = await apiFetch(
       "/discover/movie",
@@ -43,6 +45,7 @@ export async function getUpcomingMovies(): Promise<Films> {
     return result
   } catch (error) {
     console.warn("[getUpcomingMovies]", error)
+    return null
   }
 }
 

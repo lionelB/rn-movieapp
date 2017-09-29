@@ -1,7 +1,7 @@
 // @flow
 import React from "react"
 import { FilmItem } from "./film-item"
-import { StyleSheet, Text, View, FlatList } from "react-native"
+import { StyleSheet, View, FlatList } from "react-native"
 
 import type { Film } from "../../types"
 
@@ -38,9 +38,10 @@ export class FilmList extends React.Component {
       switch (index % 2) {
         case 0:
           return [...films, [film]]
-        case 1:
-          const [tail, ...head] = films.slice().reverse()
+        case 1: {
+          const [tail] = films.slice().reverse()
           return [...films.slice(0, -1), [...tail, film]]
+        }
       }
       return films
     }, [])
@@ -50,7 +51,7 @@ export class FilmList extends React.Component {
       <FlatList
         data={tupleList}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }, index) => {
+        renderItem={({ item }) => {
           const [itemLeft, itemRight] = item
           return (
             <View style={styles.grid}>

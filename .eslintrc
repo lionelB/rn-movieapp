@@ -6,7 +6,7 @@
     "node": true
   },
   "parser": "babel-eslint",
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
@@ -15,12 +15,14 @@
       "experimentalObjectRestSpread": true
     }
   },
-  "plugins": ["import", "react", "react-native"],
+  "plugins": ["import", "react", "react-native", "prettier"],
   "globals": {
     "SyntheticMouseEvent": true,
     "SyntheticTouchEvent": true
   },
   "rules": {
+    "prettier/prettier": "error",
+    "no-console": "warn",
     // Possible Errors
     "no-extra-parens": [
       "error",
@@ -88,7 +90,7 @@
     "array-bracket-spacing": ["error", "never"],
     "brace-style": [
       "error",
-      "stroustrup",
+      "1tbs",
       {
         "allowSingleLine": true
       }
@@ -100,7 +102,7 @@
     "computed-property-spacing": ["error", "never"],
     "eol-last": ["error", "always"],
     "func-call-spacing": ["error", "never"],
-    "indent": ["error", 2],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "jsx-quotes": ["error", "prefer-double"],
     "key-spacing": "error",
     "keyword-spacing": "error",
